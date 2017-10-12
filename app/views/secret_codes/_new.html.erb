@@ -1,0 +1,6 @@
+<%= form_for @sc do |f| %>
+	<%= f.label :code_count %>:
+  	<%= select_tag "count", options_for_select([ "1", "10", "20", "50", "100" ], "10") %><br />
+
+  	<%= f.submit %>
+<% end %>
