@@ -1,3 +1,20 @@
-<h1>Welcomes#index</h1>
-<p>Find me in app/views/welcomes/index.html.erb</p>
-<%= link_to "Secret code", secret_codes_path %>
+<!-- <h1>Welcomes#index</h1>
+<p>Find me in app/views/welcomes/index.html.erb</p> -->
+<%#= link_to "Secret code", secret_codes_path %>
+
+
+
+
+
+<% content_for :top_content do %>
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Welcome!</h1>
+      <p>Register to get started.</p>
+      <p>
+      <%= link_to "Secret code", secret_codes_path %>
+        <%#= link_to 'Register', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
+      </p>
+    </div>
+  </div>
+<% end %>
