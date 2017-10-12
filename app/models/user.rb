@@ -4,14 +4,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  # validations
   validates :email, uniqueness: true
+  validate :check_code, on: :create
 
+  # Associations
   has_one :secret_code, dependent: :destroy
   has_one :role, dependent: :destroy
 
   attr_accessor :code
 
-  validate :check_code, on: :create
 
   after_create_commit :save_code, :assign_role
 
