@@ -7,3 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 user = User.new(first_name: "admin", last_name: "example", email: "admin@example.com", password: "password")
 user.save(validate: false)
+user.create_role(role_type: "admin")

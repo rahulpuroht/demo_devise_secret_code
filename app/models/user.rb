@@ -6,13 +6,14 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
 
-  has_one :secret_code
+  has_one :secret_code, dependent: :destroy
+  has_one :role, dependent: :destroy
 
   attr_accessor :code
 
   validate :check_code, on: :create
 
-  after_create_commit :save_code
+  after_create_commit :save_code, :assign_role
 
   def check_code
   	sc = SecretCode.find_by(code: self.code, user_id: nil)
@@ -22,11 +23,15 @@ class User < ApplicationRecord
   end
 
   def save_code
-  	SecretCode.find_by(code: self.code).update(user_id: self.id) unless (self.email == "admin@example.com")
+  	SecretCode.find_by(code: self.code).update(user_id: self.id) unless (self.role.role_type == "admin")
+  end
+
+  def assign_role
+    self.create_role(role_type: "normal") unless (self.role.role_type == "admin")
   end
 
   def admin?
-    (self.email == "admin@example.com")
+    (self.role.role_type == "admin")
   end
 
 end
